@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PokerManager _pokerManager;
     [SerializeField]
-    private Rps _Rps;
+    private RPS_Manager _Rps;
     [SerializeField]
     private Curve _Curve;
 
