@@ -15,7 +15,6 @@ public class PokerCard : MonoBehaviour
     public CardType TypeCard;
 
     public Texture[] textureVisibleFaces = new Texture[4];
-    
 
     private MeshRenderer meshRenderer;
 
@@ -26,11 +25,13 @@ public class PokerCard : MonoBehaviour
 
     public void GenerateCard(bool IsFlipped = false)
     {
-        if (IsFlipped)
-        {
-            transform.Rotate(new Vector3(0,0,180));
-        }
         TypeCard = (CardType)Random.Range(0, 4);
+        if(IsFlipped) 
+            Flip();
+    }
 
+    public void Flip()
+    {
+        transform.Rotate(new Vector3(0, 0, 180));
     }
 }

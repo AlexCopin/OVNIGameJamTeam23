@@ -5,18 +5,10 @@ using UnityEngine;
 public class MiniGame : MonoBehaviour
 {
 
-    public bool IsActive = false;
-
-    void Start()
+    virtual protected void Start()
     {
         
     }
-
-    void Update()
-    {
-        
-    }
-
     virtual public void StartGame()
     {
         GameManager.Instance._validateAction += Validate;
@@ -25,5 +17,11 @@ public class MiniGame : MonoBehaviour
     virtual public void Validate()
     {
         GameManager.Instance._validateAction -= Validate;
+    }
+
+    virtual public void CloseGame()
+    {
+        //Global code put here
+        gameObject.SetActive(false);
     }
 }

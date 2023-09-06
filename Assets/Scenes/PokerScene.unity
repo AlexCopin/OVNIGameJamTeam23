@@ -245,6 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pokerManager: {fileID: 896476430}
+  _Rps: {fileID: 1873046531}
 --- !u!4 &512199366
 Transform:
   m_ObjectHideFlags: 0
@@ -290,8 +291,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabPokerCard: {fileID: 6702750439295781869, guid: 6e77e7cab60e52048bf66f7cae56a98c, type: 3}
-  _NumberCardsPlayers: 5
-  _NumberCardsNeutral: 6
+  _NumberCardsPlayers: 2
+  _NumberCardsNeutral: 5
   _PosCardsPlayer: {x: 0, y: -3}
   _PosCardsIA: {x: 0, y: 3}
   _PosCardsNeutral: {x: 0, y: 0}
@@ -311,6 +312,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1873046530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1873046532}
+  - component: {fileID: 1873046531}
+  m_Layer: 0
+  m_Name: RPS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1873046531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873046530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725cb0cedd2847849a79c37215716883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1873046532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873046530}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.43479812, y: -0.63374996, z: -0.054993443}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -318,3 +363,4 @@ SceneRoots:
   - {fileID: 31169344}
   - {fileID: 896476431}
   - {fileID: 512199366}
+  - {fileID: 1873046532}

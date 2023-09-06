@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,6 +12,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private PokerManager _pokerManager;
+    [SerializeField]
+    private Rps _Rps;
+
+    private MiniGame _CurrentMiniGame;
 
     [HideInInspector]
     private UnityEvent _validateEvent;
@@ -27,19 +32,23 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-    }
-    void Start()
-    {
         if (_validateEvent == null)
             _validateEvent = new UnityEvent();
         _validateAction += ValidateCurrentGame;
         _validateEvent.AddListener(_validateAction);
     }
+    void Start()
+    {
+        _pokerManager.StartGame();
+    }
 
     void Update()
     {
-        if (Input.GetButtonDown("Validate"))
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            Debug.Log("hit button validate");
             _validateEvent.Invoke();
+        }
     }
 
     void ValidateCurrentGame()
@@ -52,9 +61,19 @@ public class GameManager : MonoBehaviour
 
     void ChangeGame()
     {
-        if (_pokerManager.IsActive)
+        if (_pokerManager.gameObject.activeSelf)
         {
-
+            _pokerManager.CloseGame();
+            _pokerManager.gameObject.SetActive(false);
+            _Rps.gameObject.SetActive(true);
+            _Rps.StartGame();
+        }
+        else if (_Rps.gameObject.activeSelf)
+        {
+            _Rps.CloseGame();
+            _Rps.gameObject.SetActive(false);
+            _pokerManager.gameObject.SetActive(true);
+            _Rps.StartGame();
         }
     }
 }

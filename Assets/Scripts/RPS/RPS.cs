@@ -19,7 +19,7 @@ public class Rps : MiniGame
         _cardValues.Add("carreau");
     }
 
-    void Start()
+    override protected void Start()
     {
         //Pique > Coeur > Trèfles > Carreau > Pique
         

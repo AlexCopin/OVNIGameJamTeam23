@@ -28,12 +28,11 @@ public class PokerManager : MiniGame
     private float _cardsOffset;
 
 
-    void Start()
+     void Awake()
     {
         _pokerCardsIA = new List<PokerCard>();
         _pokerCardsNeutral = new List<PokerCard>();
         _pokerCardsPlayer = new List<PokerCard>();
-        //StartGame();
     }
 
     override public void StartGame()
@@ -45,13 +44,13 @@ public class PokerManager : MiniGame
             float leftOffset = (_PosCardsIA.x - (_cardsOffset * _NumberCardsPlayers) / 2) + (_cardsOffset * i);
             Vector2 posIA = new Vector2(leftOffset, _PosCardsIA.y);
 
-            PokerCard cardIA = Instantiate<GameObject>(_prefabPokerCard).GetComponent<PokerCard>();
+            PokerCard cardIA = Instantiate<GameObject>(_prefabPokerCard, transform).GetComponent<PokerCard>();
             cardIA.GenerateCard(true);
             cardIA.transform.position = posIA;
 
             Vector2 posPlayer = new Vector2(leftOffset, _PosCardsPlayer.y);
 
-            PokerCard cardPlayer = Instantiate<GameObject>(_prefabPokerCard).GetComponent<PokerCard>();
+            PokerCard cardPlayer = Instantiate<GameObject>(_prefabPokerCard, transform).GetComponent<PokerCard>();
             //_pokerCardsPlayer.Add(cardPlayer);
             cardPlayer.GenerateCard();
             cardPlayer.transform.position = posPlayer;
@@ -63,7 +62,7 @@ public class PokerManager : MiniGame
             float leftOffset = (_PosCardsNeutral.x - (_cardsOffset * _NumberCardsNeutral) / 2) + (_cardsOffset * i);
             Vector2 posNeutral = new Vector2(leftOffset, _PosCardsNeutral.y);
 
-            PokerCard card = Instantiate<GameObject>(_prefabPokerCard).GetComponent<PokerCard>();
+            PokerCard card = Instantiate<GameObject>(_prefabPokerCard, transform).GetComponent<PokerCard>();
             card.GenerateCard();
             card.transform.position = posNeutral;
             _pokerCardsNeutral.Add(card);
@@ -73,8 +72,22 @@ public class PokerManager : MiniGame
     override public void Validate()
     {
         base.Validate();
+        foreach(PokerCard card in _pokerCardsIA)
+        {
+            card.Flip();
+        }
         Debug.Log("Validate Poker game");
     }
+
+    public override void CloseGame()
+    {
+        foreach (Transform child in transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        base.CloseGame();
+    }
+
 
     void OnDrawGizmosSelected()
     {
