@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         _currentMoney = StartMoney;
         _pokerManager.StartGame();
         _currentGame = _pokerManager;
+        _pokerManager.OnValidate += ValidateCurrentGame;
     }
 
     void Update()
@@ -80,12 +81,17 @@ public class GameManager : MonoBehaviour
 
     void ValidateCurrentGame(bool PlayerWon)
     {
-        Debug.Log("Valider le current game");
         //Start coroutine or shits for FX Sounds
         //Then call ChangeGame
         if (PlayerWon)
         {
+            Debug.Log("Player won");
             _Curve.MovementCurve(_currentBid);
+        }
+        else
+        {
+            Debug.Log("Player lost");
+            _Curve.MovementCurve(-_currentBid);
         }
         ChangeGame();
     }
