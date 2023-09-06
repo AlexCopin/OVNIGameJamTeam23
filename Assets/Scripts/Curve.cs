@@ -81,7 +81,7 @@ public class Curve : MonoBehaviour
             }
             else
             {
-                MovementCurve(_randomValueBot);
+                MovementCurve(_randomValueBot*50);
                 _originPos = transform.position;
                 _timeElapsed = 0;
                 _randomValueBot = Random.Range(_maxMoneyToLose / 50, _maxMoneyToAdd / 50);
@@ -100,7 +100,7 @@ public class Curve : MonoBehaviour
             if (!_isChanging && _isPlayer)
             {
                 //_isChanging = true;
-                MovementCurve(Random.Range(-2f, 2f));
+                MovementCurve(Random.Range(-200, 200));
                 
             }
             
@@ -109,15 +109,15 @@ public class Curve : MonoBehaviour
 
 
     }
-    public void MovementCurve(float value)
+    public void MovementCurve(float money)
     {
-        _moneyValue -= value * 10;
+        _moneyValue -= money;
         _isChanging = true;
         float elapsedTime = 0;
         Vector2 startPos = gameObject.transform.position;
         while (elapsedTime < _lerpDuration)
         {
-            gameObject.transform.position = Vector2.Lerp(startPos, new Vector2(startPos.x, startPos.y + value), elapsedTime/_lerpDuration);
+            gameObject.transform.position = Vector2.Lerp(startPos, new Vector2(startPos.x, startPos.y + money/50), elapsedTime/_lerpDuration);
             elapsedTime += Time.deltaTime;
         }
         _originPos = gameObject.transform.position;

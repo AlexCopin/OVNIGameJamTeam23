@@ -231,14 +231,6 @@ PrefabInstance:
       propertyPath: _playerCurve
       value: 
       objectReference: {fileID: 883344935}
-    - target: {fileID: 5772919413048880193, guid: cf06baab87931c646b3cc4c782c8aabd, type: 3}
-      propertyPath: _maxMoneyToAdd
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5772919413048880193, guid: cf06baab87931c646b3cc4c782c8aabd, type: 3}
-      propertyPath: _maxMoneyToLose
-      value: -50
-      objectReference: {fileID: 0}
     - target: {fileID: 6001289010835177559, guid: cf06baab87931c646b3cc4c782c8aabd, type: 3}
       propertyPath: m_Parameters.colorGradient.key0.g
       value: 1
