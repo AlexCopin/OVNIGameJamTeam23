@@ -14,13 +14,22 @@ public class GameManager : MonoBehaviour
     private PokerManager _pokerManager;
     [SerializeField]
     private Rps _Rps;
+    [SerializeField]
+    private Curve _Curve;
 
-    private MiniGame _CurrentMiniGame;
+    MiniGame _currentGame;
 
-    [HideInInspector]
-    private UnityEvent _validateEvent;
-    [HideInInspector]
-    public UnityAction _validateAction;
+    public float StartMoney;
+    private float _currentMoney;
+    [SerializeField]
+    private float _Bid1Value;
+    [SerializeField]
+    private float _Bid2Value;
+    [SerializeField]
+    private float _Bid3Value;
+    [SerializeField]
+    private float _Bid4Value;
+    private float _currentBid;
 
     private void Awake()
     {
@@ -32,14 +41,12 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-        if (_validateEvent == null)
-            _validateEvent = new UnityEvent();
-        _validateAction += ValidateCurrentGame;
-        _validateEvent.AddListener(_validateAction);
     }
     void Start()
     {
+        _currentMoney = StartMoney;
         _pokerManager.StartGame();
+        _currentGame = _pokerManager;
     }
 
     void Update()
@@ -47,15 +54,39 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             Debug.Log("hit button validate");
-            _validateEvent.Invoke();
+            _currentGame.Validate();
+        }
+        if (Input.GetButtonDown("Bet1"))
+        {
+            Debug.Log("Change Bet1");
+            _currentBid = _Bid1Value;
+        }
+        if (Input.GetButtonDown("Bet2"))
+        {
+            Debug.Log("Change Bet2");
+            _currentBid = _Bid2Value;
+        }
+        if (Input.GetButtonDown("Bet3"))
+        {
+            Debug.Log("Change Bet3");
+            _currentBid = _Bid3Value;
+        }
+        if (Input.GetButtonDown("Bet4"))
+        {
+            Debug.Log("Change Bet4");
+            _currentBid = _Bid4Value;
         }
     }
 
-    void ValidateCurrentGame()
+    void ValidateCurrentGame(bool PlayerWon)
     {
         Debug.Log("Valider le current game");
         //Start coroutine or shits for FX Sounds
         //Then call ChangeGame
+        if (PlayerWon)
+        {
+            _Curve.MovementCurve(_currentBid);
+        }
         ChangeGame();
     }
 
@@ -64,16 +95,23 @@ public class GameManager : MonoBehaviour
         if (_pokerManager.gameObject.activeSelf)
         {
             _pokerManager.CloseGame();
+            _pokerManager.OnValidate -= ValidateCurrentGame;
             _pokerManager.gameObject.SetActive(false);
+
             _Rps.gameObject.SetActive(true);
-            _Rps.StartGame();
+            _Rps.OnValidate += ValidateCurrentGame;
+            _currentGame = _Rps;
         }
         else if (_Rps.gameObject.activeSelf)
         {
             _Rps.CloseGame();
+            _Rps.OnValidate -= ValidateCurrentGame;
             _Rps.gameObject.SetActive(false);
+
             _pokerManager.gameObject.SetActive(true);
-            _Rps.StartGame();
+            _pokerManager.OnValidate += ValidateCurrentGame;
+            _currentGame = _pokerManager;
         }
+        _currentGame.StartGame();
     }
 }

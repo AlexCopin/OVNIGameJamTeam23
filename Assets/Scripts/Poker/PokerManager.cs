@@ -18,15 +18,14 @@ public class PokerManager : MiniGame
 
 
     [SerializeField]
-    Vector2 _PosCardsPlayer;
+    private Vector2 _PosCardsPlayer;
     [SerializeField]
-    Vector2 _PosCardsIA;
+    private Vector2 _PosCardsIA;
     [SerializeField]
-    Vector2 _PosCardsNeutral;
+    private Vector2 _PosCardsNeutral;
 
     [SerializeField]
     private float _cardsOffset;
-
 
      void Awake()
     {
@@ -72,12 +71,34 @@ public class PokerManager : MiniGame
     override public void Validate()
     {
         base.Validate();
-        foreach(PokerCard card in _pokerCardsIA)
+        //Put Coroutine HERE to check cards -> 
+        Debug.Log("Validate Poker game");
+        StartCoroutine(FlipEnumerator());
+    }
+
+    IEnumerator FlipEnumerator()
+    {
+        foreach (PokerCard card in _pokerCardsIA)
         {
             card.Flip();
+            Debug.Log("Flip Card");
+            yield return new WaitForSeconds(1.0f);
         }
-        Debug.Log("Validate Poker game");
+        int scoreIA = 0;
+        int scorePlayer = 0;
+        for (int i = 0; i < _NumberCardsPlayers; i++)
+        {
+            for (int j = 0; j < _NumberCardsNeutral; j++)
+            {
+                scoreIA += (_pokerCardsIA[i].TypeCard == _pokerCardsNeutral[j].TypeCard ? 1 : 0);
+                scorePlayer += (_pokerCardsPlayer[i].TypeCard == _pokerCardsNeutral[j].TypeCard ? 1 : 0);
+            }
+        }
+
+        CallValidate(scoreIA < scorePlayer);
+        yield return null;
     }
+
 
     public override void CloseGame()
     {
