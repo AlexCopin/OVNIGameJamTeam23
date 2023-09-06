@@ -53,7 +53,7 @@ public class Curve : MonoBehaviour
                 if (_timeElapsed < _lerpDuration)
                 {
 
-                    gameObject.transform.position = Vector2.Lerp(_originPos, new Vector2(_originPos.x + _speedValue / 10, _originPos.y), _timeElapsed);
+                    gameObject.transform.position = Vector2.Lerp(_originPos, new Vector2(_originPos.x + _speedValue / 10, _originPos.y - _losingValue), _timeElapsed);
 
 
                     _timeElapsed += Time.deltaTime;
