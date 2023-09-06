@@ -11,6 +11,7 @@ public class Curve : MonoBehaviour
     [SerializeField] float _losingValue;
     [SerializeField] bool _isPlayer;
     [SerializeField] Camera _cam;
+    [SerializeField] Transform _playerCurve;
     float _timeElapsed;
     float _lerpDuration;
     Vector2 _originPos;
@@ -28,49 +29,59 @@ public class Curve : MonoBehaviour
         _randomValueBot = Random.Range(_maxMoneyToLose/50, _maxMoneyToAdd/50);
         _moneyValue = 100 ;
     }
+
+    //Note: Money = 50 * height 
     private void Update()
     {
-        if (_isPlayer && _moneyValue <= 0)
+        if (_isPlayer)
         {
-            Debug.Log("Death");
-        }
+            if (_moneyValue <= 0)
+            {
+                Debug.Log("Death");
+            }
 
-        else if (_isPlayer && !_isChanging)
-        {
- 
+            if (gameObject.transform.position.x >= _cam.transform.position.x + _cam.pixelWidth)
+            {
+                /*_cam.transform.parent = gameObject.transform;*/
+                Debug.Log("out");
+            }
 
-            if (_timeElapsed < _lerpDuration)
+            else if (!_isChanging)
             {
 
-                gameObject.transform.position = Vector2.Lerp(_originPos, new Vector2(_originPos.x + _speedValue / 10, _originPos.y - _losingValue), _timeElapsed / _lerpDuration);
-                    
 
-                _timeElapsed += Time.deltaTime;
+                if (_timeElapsed < _lerpDuration)
+                {
+
+                    gameObject.transform.position = Vector2.Lerp(_originPos, new Vector2(_originPos.x + _speedValue / 10, _originPos.y), _timeElapsed);
+
+
+                    _timeElapsed += Time.deltaTime;
+                }
+                else
+                {
+                    _originPos = transform.position;
+                    _timeElapsed = 0;
+
+                }
+
+
             }
-            else
-            {
-                _originPos = transform.position;
-                _timeElapsed = 0;
-                
-            }
-            
-           
         }
 
         else
         {
-            
             if (_timeElapsed < _lerpDuration)
             {
 
-                gameObject.transform.position = Vector2.Lerp(_originPos, new Vector2(_originPos.x + _speedValue / 10, _originPos.y + _randomValueBot), _timeElapsed / _lerpDuration);
+                gameObject.transform.position = Vector2.Lerp(_originPos, new Vector2(_playerCurve.position.x, transform.position.y), _timeElapsed);
 
 
-                _timeElapsed += Time.deltaTime;
+                _timeElapsed += (Random.Range(0.005f, 0.05f) + Time.deltaTime);
             }
             else
             {
-                
+                MovementCurve(_randomValueBot);
                 _originPos = transform.position;
                 _timeElapsed = 0;
                 _randomValueBot = Random.Range(_maxMoneyToLose / 50, _maxMoneyToAdd / 50);
@@ -100,7 +111,7 @@ public class Curve : MonoBehaviour
     }
     void MovementCurve(float value)
     {
-        _moneyValue -= value * 50;
+        _moneyValue -= value * 10;
         _isChanging = true;
         float elapsedTime = 0;
         Vector2 startPos = gameObject.transform.position;

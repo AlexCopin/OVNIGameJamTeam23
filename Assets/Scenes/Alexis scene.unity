@@ -209,7 +209,7 @@ Transform:
   m_GameObject: {fileID: 432012639}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.05, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -228,12 +228,16 @@ PrefabInstance:
       value: Curve
       objectReference: {fileID: 0}
     - target: {fileID: 5772919413048880193, guid: cf06baab87931c646b3cc4c782c8aabd, type: 3}
+      propertyPath: _playerCurve
+      value: 
+      objectReference: {fileID: 883344935}
+    - target: {fileID: 5772919413048880193, guid: cf06baab87931c646b3cc4c782c8aabd, type: 3}
       propertyPath: _maxMoneyToAdd
-      value: 200
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5772919413048880193, guid: cf06baab87931c646b3cc4c782c8aabd, type: 3}
       propertyPath: _maxMoneyToLose
-      value: -200
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 6001289010835177559, guid: cf06baab87931c646b3cc4c782c8aabd, type: 3}
       propertyPath: m_Parameters.colorGradient.key0.g
@@ -319,10 +323,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moneyValue: 0
-  _speedValue: 3
+  _speedValue: 10
   _losingValue: 0.1
   _isPlayer: 1
-  _cam: {fileID: 0}
+  _cam: {fileID: 432012641}
+  _playerCurve: {fileID: 0}
   _maxMoneyToLose: 0
   _maxMoneyToAdd: 0
 --- !u!4 &883344935
@@ -334,7 +339,7 @@ Transform:
   m_GameObject: {fileID: 883344932}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.1, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
