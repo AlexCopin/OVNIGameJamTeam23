@@ -9,23 +9,33 @@ public class Curve : MonoBehaviour
     [SerializeField] float _moneyValue;
     [SerializeField] float _speedValue;
     [SerializeField] float _losingValue;
-    [SerializeField] AnimationCurve _lerpCurve;
+    [SerializeField] bool _isPlayer;
+    [SerializeField] Camera _cam;
     float _timeElapsed;
     float _lerpDuration;
     Vector2 _originPos;
-    [SerializeField] bool _isPlayer;
+    float _randomValueBot;
     bool _isChanging;
+
+    [Header("Bot Curve")]
+    [SerializeField] float _maxMoneyToLose;
+    [SerializeField] float _maxMoneyToAdd;
 
     private void Start()
     {
         _originPos = transform.position;
         _lerpDuration = 1f;
-        
+        _randomValueBot = Random.Range(_maxMoneyToLose/50, _maxMoneyToAdd/50);
+        _moneyValue = 100 ;
     }
     private void Update()
     {
-        
-        if (_isPlayer && !_isChanging)
+        if (_isPlayer && _moneyValue <= 0)
+        {
+            Debug.Log("Death");
+        }
+
+        else if (_isPlayer && !_isChanging)
         {
  
 
@@ -41,6 +51,7 @@ public class Curve : MonoBehaviour
             {
                 _originPos = transform.position;
                 _timeElapsed = 0;
+                
             }
             
            
@@ -52,24 +63,30 @@ public class Curve : MonoBehaviour
             if (_timeElapsed < _lerpDuration)
             {
 
-                gameObject.transform.position = Vector2.Lerp(_originPos, new Vector2(_originPos.x + _speedValue / 10, gameObject.transform.position.y), _timeElapsed / _lerpDuration);
+                gameObject.transform.position = Vector2.Lerp(_originPos, new Vector2(_originPos.x + _speedValue / 10, _originPos.y + _randomValueBot), _timeElapsed / _lerpDuration);
 
 
                 _timeElapsed += Time.deltaTime;
             }
             else
             {
+                
                 _originPos = transform.position;
                 _timeElapsed = 0;
+                _randomValueBot = Random.Range(_maxMoneyToLose / 50, _maxMoneyToAdd / 50);
+                if (_moneyValue <= 80)
+                {
+                    _randomValueBot = Mathf.Abs(_randomValueBot);
+                }
             }
 
-
+            _moneyValue = gameObject.transform.position.y*50;
         }
 
         //Test
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!_isChanging)
+            if (!_isChanging && _isPlayer)
             {
                 //_isChanging = true;
                 MovementCurve(Random.Range(-2f, 2f));
@@ -77,10 +94,13 @@ public class Curve : MonoBehaviour
             }
             
         }
-        
+
+
+
     }
     void MovementCurve(float value)
     {
+        _moneyValue -= value * 50;
         _isChanging = true;
         float elapsedTime = 0;
         Vector2 startPos = gameObject.transform.position;
@@ -92,6 +112,4 @@ public class Curve : MonoBehaviour
         _originPos = gameObject.transform.position;
         _isChanging = false;
     }
-
-
 }
