@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     private RPS_Manager _Rps;
     [SerializeField]
     private Curve _Curve;
+
+    Animator Anim;
+    [SerializeField] GameObject RouletteObj;
 
     MiniGame _currentGame;
     public float StartMoney;
@@ -29,6 +33,10 @@ public class GameManager : MonoBehaviour
     private AudioSource WinningMachine;
     [SerializeField]
     private AudioSource FallingCoin;
+    [SerializeField]
+    private ParticleSystem MoneyRain1;
+    [SerializeField]
+    private ParticleSystem MoneyRain2;
     [SerializeField]
     private AudioSource LosingGame;
     [SerializeField]
@@ -57,6 +65,7 @@ public class GameManager : MonoBehaviour
         _pokerManager.OnValidate += ValidateCurrentGame;
         _currentBid = _Bid1Value;
         _textCurrentBid.text = "" + _currentBid;
+        Anim = RouletteObj.GetComponent<Animator>();
     }
 
     void Update()
@@ -106,6 +115,10 @@ public class GameManager : MonoBehaviour
             _Curve.MovementCurve(_currentBid);
             WinningMachine.Play();
             FallingCoin.Play();
+            StartCoroutine(playRoulette());
+            MoneyRain1.Play();
+            MoneyRain2.Play();
+
         }
         else
         {
@@ -114,6 +127,15 @@ public class GameManager : MonoBehaviour
             LosingGame.Play();
         }
         ChangeGame();
+    }
+
+    IEnumerator playRoulette()
+    {
+        Debug.Log("play anim");
+        RouletteObj.SetActive(true);
+        Anim.SetTrigger("isRoulette");
+        yield return new WaitForSeconds(2.2f);
+        RouletteObj.SetActive(false);
     }
 
     void ChangeGame()
