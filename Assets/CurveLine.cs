@@ -10,8 +10,6 @@ public class CurveLine : MonoBehaviour
     public Vector2 _currentPos;
     private Vector2 _startPos;
 
-    [SerializeField] private float _minDistance = 0.1f;
-
     [SerializeField] int _moneyValue;
     [SerializeField] float _speedValue;
     [SerializeField] int _losingValue;
@@ -32,6 +30,8 @@ public class CurveLine : MonoBehaviour
     [Header("Bot Curve")]
     [SerializeField] int _maxMoneyToLose;
     [SerializeField] int _maxMoneyToAdd;
+
+    List<CurveLine> _curves;
 
     int _originMoneyValue;
 
@@ -86,7 +86,9 @@ public class CurveLine : MonoBehaviour
                     {
                         _line.useWorldSpace = false;
                         transform.position = Vector2.Lerp(_curvePos, new Vector2(_curvePos.x - _speedValue / 10, _curvePos.y), _timeElapsed / _lerpDuration);
+
                     }
+                    
                     
                     _currentPos = Vector2.Lerp(_originPos, new Vector2(_originPos.x + _speedValue / 10, _originPos.y - (_losingValue * _unitForMoney)), _timeElapsed / _lerpDuration);
                     _moneyValue = (int)Mathf.Lerp(_originMoneyValue, _originMoneyValue - _losingValue, _timeElapsed / _lerpDuration);
@@ -94,6 +96,8 @@ public class CurveLine : MonoBehaviour
                     _line.SetPosition(_line.positionCount - 1, _currentPos);
                     _previousPosition = _currentPos;
                     _timeElapsed += Time.deltaTime;
+                    
+                    
                 }
 
                 
@@ -108,32 +112,42 @@ public class CurveLine : MonoBehaviour
             }
         }
 
-        else if(!_isPlayer)
+        else if(!_isPlayer && !_playerCurve.isDead)
         {
 
 
             if (_timeElapsed < _lerpDuration)
             {
+                if (_isAtRight)
+                {
+                    _line.useWorldSpace = false;
+                    //transform.position = Vector2.Lerp(_curvePos, new Vector2(-_playerCurve._currentPos.x, _curvePos.y), _timeElapsed / _lerpDuration);
+                    transform.position = _playerCurve.gameObject.transform.position;
+                    
+                    /*gameObject.transform.SetParent(_playerCurve.gameObject.transform);*/
+                }
+                
                 _currentPos = Vector2.Lerp(_originPos, new Vector2(_playerCurve._currentPos.x, _originPos.y), _timeElapsed / _lerpDuration);
+                _moneyValue = (int)Mathf.Lerp(_originMoneyValue, _originMoneyValue - _losingValue, _timeElapsed / _lerpDuration);
                 _line.positionCount++;
                 _line.SetPosition(_line.positionCount - 1, _currentPos);
                 _previousPosition = _currentPos;
+                _timeElapsed += 0.05f + Time.deltaTime;
 
 
-                _timeElapsed += (Random.Range(0.05f, 0.1f) + Time.deltaTime);
-                
             }
             else
             {
                 MovementCurve(_randomValueBot);
                 _timeElapsed = 0;
                 _originPos = _previousPosition;
-                
+                _originMoneyValue = _moneyValue;
                 _randomValueBot = Random.Range(_maxMoneyToLose, _maxMoneyToAdd);
                 if (_moneyValue <= 80)
                 {
                     _randomValueBot = Mathf.Abs(_randomValueBot);
                 }
+                _curvePos = transform.position;
             }
 
             _moneyValue = (int)(_currentPos.y * 100);
