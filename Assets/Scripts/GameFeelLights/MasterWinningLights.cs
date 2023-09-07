@@ -30,7 +30,7 @@ public class MasterWinningLights : MonoBehaviour
     void Start()
     {
        setParamsOnSlaves();
-       hideAll = true;
+       // hideAll = true;
     }
 
     // Update is called once per frame
