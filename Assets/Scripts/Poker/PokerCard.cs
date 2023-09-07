@@ -7,27 +7,33 @@ public class PokerCard : MonoBehaviour
 {
     public enum CardType
     {
-        MonkeCoin = 0,
+        ShitCoin = 0,
         DogeCoin = 1,
         LamastiCoin = 2,
         EteRhum = 3
     }
     public CardType TypeCard;
 
-    public Texture[] textureVisibleFaces = new Texture[4];
+    [SerializeField]
+    private List<Material> _materials;
 
     private MeshRenderer meshRenderer;
 
-    private void Start()
+    private void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
     public void GenerateCard(bool IsFlipped = false)
     {
-        TypeCard = (CardType)Random.Range(0, 4);
-        if(IsFlipped) 
+        int RandomInd = Random.Range(0, 4);
+        TypeCard = (CardType)RandomInd;
+        List<Material> tempList = new();
+        tempList.Add(_materials[RandomInd]);
+        meshRenderer.SetMaterials(tempList);
+        if (IsFlipped) 
             Flip();
+        
     }
 
     public void Flip()

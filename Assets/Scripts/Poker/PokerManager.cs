@@ -24,6 +24,7 @@ public class PokerManager : MiniGame
     [SerializeField]
     private Vector2 _PosCardsNeutral;
 
+
     [SerializeField]
     private float _cardsOffset;
 
@@ -50,7 +51,6 @@ public class PokerManager : MiniGame
             Vector2 posPlayer = new Vector2(leftOffset, _PosCardsPlayer.y);
 
             PokerCard cardPlayer = Instantiate<GameObject>(_prefabPokerCard, transform).GetComponent<PokerCard>();
-            //_pokerCardsPlayer.Add(cardPlayer);
             cardPlayer.GenerateCard();
             cardPlayer.transform.position = posPlayer;
             _pokerCardsIA.Add(cardIA);

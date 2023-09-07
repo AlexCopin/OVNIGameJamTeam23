@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     private float _Bid4Value;
     private float _currentBid;
 
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
