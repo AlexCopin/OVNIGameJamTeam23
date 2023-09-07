@@ -10,7 +10,7 @@ public class CurveLine : MonoBehaviour
     public Vector2 _currentPos;
     private Vector2 _startPos;
 
-    [SerializeField] int _moneyValue;
+    int _moneyValue;
     [SerializeField] float _speedValue;
     [SerializeField] int _losingValue;
     [SerializeField] bool _isPlayer;
@@ -54,7 +54,14 @@ public class CurveLine : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _originPos = _previousPosition;
         _originMoneyValue = _moneyValue;
-        _moneyValue = (int)GameManager.Instance.StartMoney;
+        if (_isPlayer)
+        {
+            _moneyValue = (int)GameManager.Instance.StartMoney;
+        }
+        else
+        {
+            _moneyValue = Random.Range(50, 300);
+        }
         _curvePos = transform.position;
     }
 
