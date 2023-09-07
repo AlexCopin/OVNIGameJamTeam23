@@ -114,12 +114,9 @@ public class PokerManager : MiniGame
     {
         Gizmos.color = new Color(1, 0, 0, 0.5f);
         Gizmos.DrawCube(_PosCardsPlayer, new Vector3(1, 1, 1));
-        Handles.Label(_PosCardsPlayer, "Player's Cards");
 
         Gizmos.DrawCube(_PosCardsIA, new Vector3(1, 1, 1));
-        Handles.Label(_PosCardsIA, "IA's Cards");
 
         Gizmos.DrawCube(_PosCardsNeutral, new Vector3(1, 1, 1));
-        Handles.Label(_PosCardsNeutral, "Neutral's Cards");
     }
 }
