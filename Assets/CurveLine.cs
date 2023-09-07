@@ -35,6 +35,8 @@ public class CurveLine : MonoBehaviour
 
     int _originMoneyValue;
 
+    bool isDead;
+
     Vector2 _curvePos;
     private void Start()
     {
@@ -43,7 +45,6 @@ public class CurveLine : MonoBehaviour
         _isAtRight = false;
         _lerpDuration = 1f;
         _randomValueBot = Random.Range(_maxMoneyToLose, _maxMoneyToAdd);
-        _moneyValue = 100;
         _timeElapsed = 0f;
         
         _unitForMoney = _curveZone.GetComponent<SpriteRenderer>().bounds.size.y / 600;
@@ -54,15 +55,28 @@ public class CurveLine : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _originPos = _previousPosition;
         _originMoneyValue = _moneyValue;
-
+        _moneyValue = (int)GameManager.Instance.StartMoney;
         _curvePos = transform.position;
     }
 
     private void Update()
     {
         
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!_isChanging && _isPlayer)
+            {
+                MovementCurve(-20);
+
+            }
+
+        }
+        if (_moneyValue <= 0)
+        {
+            isDead = true;
+        }
         CheckIfOut();
-        if (_isPlayer)
+        if (_isPlayer && !isDead)
         {
             if (!_isChanging)
             {
@@ -94,13 +108,12 @@ public class CurveLine : MonoBehaviour
             }
         }
 
-        else
+        else if(!_isPlayer)
         {
 
 
             if (_timeElapsed < _lerpDuration)
             {
-                //_currentPos = Vector2.Lerp(_originPos, new Vector2(_playerCurve._currentPos.x, _originPos.y), _timeElapsed / _lerpDuration);
                 _currentPos = Vector2.Lerp(_originPos, new Vector2(_playerCurve._currentPos.x, _originPos.y), _timeElapsed / _lerpDuration);
                 _line.positionCount++;
                 _line.SetPosition(_line.positionCount - 1, _currentPos);
@@ -125,32 +138,39 @@ public class CurveLine : MonoBehaviour
 
             _moneyValue = (int)(_currentPos.y * 100);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!_isChanging && _isPlayer)
-            {
-                MovementCurve(Random.Range(-200, 200));
-
-            }
-
-        }
+        
+        _moneyValue = Mathf.Clamp(_moneyValue, 0, 500);
+        
     }
     public void MovementCurve(int money)
     {
-        _moneyValue -= money;
+        
+        _moneyValue += money;
         _isChanging = true;
         float elapsedTime = 0;
         Vector2 startPos = _previousPosition;
         while (elapsedTime < _lerpDuration)
         {
-            _currentPos = Vector2.Lerp(startPos, new Vector2(startPos.x, startPos.y + money / 100), elapsedTime / _lerpDuration);
+            _currentPos = Vector2.Lerp(startPos, new Vector2(startPos.x, startPos.y + money * _unitForMoney), elapsedTime / _lerpDuration);
+            
+            
             _line.positionCount++;
             _line.SetPosition(_line.positionCount - 1, _currentPos);
             _previousPosition = _currentPos;
             elapsedTime += Time.deltaTime;
+            
+            
         }
         _originPos = _previousPosition;
         _isChanging = false;
+        _curvePos = transform.position;
+        CheckIfOut();
+        if (_isAtRight)
+        {
+            _line.useWorldSpace = false;
+            transform.position = Vector2.Lerp(_curvePos, new Vector2(_curvePos.x - _speedValue / 10, _curvePos.y), _timeElapsed / _lerpDuration);
+        }
+        _originMoneyValue = _moneyValue;
     }
 
 
@@ -160,15 +180,15 @@ public class CurveLine : MonoBehaviour
         float xmax = _curveZone.transform.position.x + (_curveZone.GetComponent<SpriteRenderer>().bounds.size.x / 2);
         float ymin = _curveZone.transform.position.y - (_curveZone.GetComponent<SpriteRenderer>().bounds.size.y / 2);
         float ymax = _curveZone.transform.position.y + (_curveZone.GetComponent<SpriteRenderer>().bounds.size.y / 2);
-        if (_currentPos.x >= xmax)
+        if (_currentPos.y <= ymin)
         {
-            Debug.Log("Trop à droite");
+            _currentPos.y = ymin;
+        }
+        else if (_currentPos.x >= xmax)
+        {
             _isAtRight = true;
         }
-        else if (_currentPos.y <= ymin)
-        {
-            Debug.Log("Trop en bas");
-        }
+        
         else if (_currentPos.y >= ymax)
         {
             Debug.Log("Trop en haut");
