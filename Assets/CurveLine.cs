@@ -67,7 +67,6 @@ public class CurveLine : MonoBehaviour
             if (!_isChanging && _isPlayer)
             {
                 MovementCurve(-20);
-
             }
 
         }
@@ -121,14 +120,12 @@ public class CurveLine : MonoBehaviour
                 if (_isAtRight)
                 {
                     _line.useWorldSpace = false;
-                    //transform.position = Vector2.Lerp(_curvePos, new Vector2(-_playerCurve._currentPos.x, _curvePos.y), _timeElapsed / _lerpDuration);
                     transform.position = _playerCurve.gameObject.transform.position;
                     
-                    /*gameObject.transform.SetParent(_playerCurve.gameObject.transform);*/
                 }
                 
                 _currentPos = Vector2.Lerp(_originPos, new Vector2(_playerCurve._currentPos.x, _originPos.y), _timeElapsed / _lerpDuration);
-                _moneyValue = (int)Mathf.Lerp(_originMoneyValue, _originMoneyValue - _losingValue, _timeElapsed / _lerpDuration);
+                
                 _line.positionCount++;
                 _line.SetPosition(_line.positionCount - 1, _currentPos);
                 _previousPosition = _currentPos;
@@ -150,7 +147,7 @@ public class CurveLine : MonoBehaviour
                 _curvePos = transform.position;
             }
 
-            _moneyValue = (int)(_currentPos.y * 100);
+            /*_moneyValue = (int)(_currentPos.y * 100);*/
         }
         
         _moneyValue = Mathf.Clamp(_moneyValue, 0, 500);
@@ -160,6 +157,7 @@ public class CurveLine : MonoBehaviour
     {
         
         _moneyValue += money;
+        
         _isChanging = true;
         float elapsedTime = 0;
         Vector2 startPos = _previousPosition;
