@@ -36,12 +36,11 @@ public class CurveLine : MonoBehaviour
     int _originMoneyValue;
 
     bool isDead;
-
     Vector2 _curvePos;
     private void Start()
     {
 
-
+        
         _isAtRight = false;
         _lerpDuration = 1f;
         _randomValueBot = Random.Range(_maxMoneyToLose, _maxMoneyToAdd);
@@ -74,7 +73,7 @@ public class CurveLine : MonoBehaviour
         {
             isDead = true;
         }
-        CheckIfOut();
+        
         if (_isPlayer && !isDead)
         {
             if (!_isChanging)
@@ -135,7 +134,10 @@ public class CurveLine : MonoBehaviour
             }
             else
             {
+                
                 MovementCurve(_randomValueBot);
+                
+                
                 _timeElapsed = 0;
                 _originPos = _previousPosition;
                 _originMoneyValue = _moneyValue;
@@ -149,7 +151,7 @@ public class CurveLine : MonoBehaviour
 
             /*_moneyValue = (int)(_currentPos.y * 100);*/
         }
-        
+        CheckIfOut();
         _moneyValue = Mathf.Clamp(_moneyValue, 0, 500);
         
     }
@@ -190,14 +192,17 @@ public class CurveLine : MonoBehaviour
     void CheckIfOut()
     {
         float xmax = _curveZone.transform.position.x + (_curveZone.GetComponent<SpriteRenderer>().bounds.size.x / 2);
+        
         float ymin = _curveZone.transform.position.y - (_curveZone.GetComponent<SpriteRenderer>().bounds.size.y / 2);
         float ymax = _curveZone.transform.position.y + (_curveZone.GetComponent<SpriteRenderer>().bounds.size.y / 2);
+        Debug.Log(xmax + ", " + _currentPos.x);
         if (_currentPos.y <= ymin)
         {
             _currentPos.y = ymin;
         }
         else if (_currentPos.x >= xmax)
         {
+            Debug.Log("Sorti");
             _isAtRight = true;
         }
         
