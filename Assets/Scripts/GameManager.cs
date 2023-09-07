@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     private Curve _Curve;
 
     MiniGame _currentGame;
-
     public float StartMoney;
     private float _currentMoney;
     [SerializeField]
@@ -26,7 +25,16 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float _Bid4Value;
     private float _currentBid;
-
+    [SerializeField]
+    private AudioSource WinningMachine;
+    [SerializeField]
+    private AudioSource FallingCoin;
+    [SerializeField]
+    private AudioSource LosingGame;
+    [SerializeField]
+    private AudioSource Mise;
+    [SerializeField]
+    private AudioSource StartGame;
     [SerializeField]
     private TMP_Text _textCurrentBid;
 
@@ -63,24 +71,28 @@ public class GameManager : MonoBehaviour
             Debug.Log("Change Bet1");
             _currentBid = _Bid1Value;
             _textCurrentBid.text = "" + _currentBid;
+            Mise.Play();
         }
         if (Input.GetButtonDown("Bet2"))
         {
             Debug.Log("Change Bet2");
             _currentBid = _Bid2Value;
             _textCurrentBid.text = "" + _currentBid;
+            Mise.Play();
         }
         if (Input.GetButtonDown("Bet3"))
         {
             Debug.Log("Change Bet3");
             _currentBid = _Bid3Value;
             _textCurrentBid.text = "" + _currentBid;
+            Mise.Play();
         }
         if (Input.GetButtonDown("Bet4"))
         {
             Debug.Log("Change Bet4");
             _currentBid = _Bid4Value;
             _textCurrentBid.text = "" + _currentBid;
+            Mise.Play();
         }
     }
 
@@ -92,11 +104,14 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Player won");
             _Curve.MovementCurve(_currentBid);
+            WinningMachine.Play();
+            FallingCoin.Play();
         }
         else
         {
             Debug.Log("Player lost");
             _Curve.MovementCurve(-_currentBid);
+            LosingGame.Play();
         }
         ChangeGame();
     }
