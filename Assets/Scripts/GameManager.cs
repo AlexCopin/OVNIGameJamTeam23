@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,6 +33,8 @@ public class GameManager : MonoBehaviour
     private float _Bid4Value;
     private float _currentBid;
 
+    [SerializeField]
+    private TMP_Text _textCurrentBid;
 
     private void Awake()
     {
@@ -49,11 +53,13 @@ public class GameManager : MonoBehaviour
         _pokerManager.StartGame();
         _currentGame = _pokerManager;
         _pokerManager.OnValidate += ValidateCurrentGame;
+        _currentBid = _Bid1Value;
+        _textCurrentBid.text = "" + _currentBid;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetButtonDown("Validate"))
         {
             Debug.Log("hit button validate");
             _currentGame.Validate();
@@ -62,21 +68,25 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Change Bet1");
             _currentBid = _Bid1Value;
+            _textCurrentBid.text = "" + _currentBid;
         }
         if (Input.GetButtonDown("Bet2"))
         {
             Debug.Log("Change Bet2");
             _currentBid = _Bid2Value;
+            _textCurrentBid.text = "" + _currentBid;
         }
         if (Input.GetButtonDown("Bet3"))
         {
             Debug.Log("Change Bet3");
             _currentBid = _Bid3Value;
+            _textCurrentBid.text = "" + _currentBid;
         }
         if (Input.GetButtonDown("Bet4"))
         {
             Debug.Log("Change Bet4");
             _currentBid = _Bid4Value;
+            _textCurrentBid.text = "" + _currentBid;
         }
     }
 
