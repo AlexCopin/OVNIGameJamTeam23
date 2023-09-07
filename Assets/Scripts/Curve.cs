@@ -27,7 +27,7 @@ public class Curve : MonoBehaviour
         _originPos = transform.position;
         _lerpDuration = 1f;
         _randomValueBot = Random.Range(_maxMoneyToLose/50, _maxMoneyToAdd/50);
-        _moneyValue = GameManager.Instance.StartMoney;
+        /*_moneyValue = GameManager.Instance.StartMoney;*/
     }
 
     //Note: Money = 50 * height 
@@ -62,6 +62,7 @@ public class Curve : MonoBehaviour
                 {
                     _originPos = transform.position;
                     _timeElapsed = 0;
+                    _moneyValue -= _losingValue;
 
                 }
 

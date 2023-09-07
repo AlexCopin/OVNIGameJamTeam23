@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -13,8 +14,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Curve _Curve;
 
-    MiniGame _currentGame;
+    Animator Anim;
+    [SerializeField] GameObject RouletteObj;
 
+    MiniGame _currentGame;
     public float StartMoney;
     private float _currentMoney;
     [SerializeField]
@@ -26,7 +29,20 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float _Bid4Value;
     private float _currentBid;
-
+    [SerializeField]
+    private AudioSource WinningMachine;
+    [SerializeField]
+    private AudioSource FallingCoin;
+    [SerializeField]
+    private ParticleSystem MoneyRain1;
+    [SerializeField]
+    private ParticleSystem MoneyRain2;
+    [SerializeField]
+    private AudioSource LosingGame;
+    [SerializeField]
+    private AudioSource Mise;
+    [SerializeField]
+    private AudioSource StartGame;
     [SerializeField]
     private TMP_Text _textCurrentBid;
 
@@ -49,6 +65,7 @@ public class GameManager : MonoBehaviour
         _pokerManager.OnValidate += ValidateCurrentGame;
         _currentBid = _Bid1Value;
         _textCurrentBid.text = "" + _currentBid;
+        Anim = RouletteObj.GetComponent<Animator>();
     }
 
     void Update()
@@ -63,24 +80,28 @@ public class GameManager : MonoBehaviour
             Debug.Log("Change Bet1");
             _currentBid = _Bid1Value;
             _textCurrentBid.text = "" + _currentBid;
+            Mise.Play();
         }
         if (Input.GetButtonDown("Bet2"))
         {
             Debug.Log("Change Bet2");
             _currentBid = _Bid2Value;
             _textCurrentBid.text = "" + _currentBid;
+            Mise.Play();
         }
         if (Input.GetButtonDown("Bet3"))
         {
             Debug.Log("Change Bet3");
             _currentBid = _Bid3Value;
             _textCurrentBid.text = "" + _currentBid;
+            Mise.Play();
         }
         if (Input.GetButtonDown("Bet4"))
         {
             Debug.Log("Change Bet4");
             _currentBid = _Bid4Value;
             _textCurrentBid.text = "" + _currentBid;
+            Mise.Play();
         }
     }
 
@@ -92,13 +113,29 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Player won");
             _Curve.MovementCurve(_currentBid);
+            WinningMachine.Play();
+            FallingCoin.Play();
+            StartCoroutine(playRoulette());
+            MoneyRain1.Play();
+            MoneyRain2.Play();
+
         }
         else
         {
             Debug.Log("Player lost");
             _Curve.MovementCurve(-_currentBid);
+            LosingGame.Play();
         }
         ChangeGame();
+    }
+
+    IEnumerator playRoulette()
+    {
+        Debug.Log("play anim");
+        RouletteObj.SetActive(true);
+        Anim.SetTrigger("isRoulette");
+        yield return new WaitForSeconds(2.2f);
+        RouletteObj.SetActive(false);
     }
 
     void ChangeGame()
