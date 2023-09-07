@@ -8,24 +8,28 @@ public class RPS_Manager : MiniGame
 {
     public GameObject signPrefab;
     private GameObject _instantiatedPlayerSign;
-    private GameObject _instantiatedAiSign; 
-    
+    private GameObject _instantiatedAiSign;
+
+    public Vector2 instantiatedPlayerPos;
+    public Vector2 instantiatedAiPos; 
     
     private int _playerInput;
     private int _aiInput;
 
+    private bool _hasStarted = false; 
     private bool _isPlayerChoice = false;
     private bool _canRedo = true;
 
-    public Transform playerCardPosition; 
-    public Transform aiCardPosition; 
+    public override void StartGame()
+    {
+        base.StartGame();
+        _hasStarted = true; 
+    }
 
-    private  void Update()
+    private void Update()
     {
         //Pique > Coeur > Trèfles > Carreau > Pique
-        
-        // MISE 
-        if (_canRedo)
+        if (_canRedo && _hasStarted)
         {
             PlayerChoice();
         }
@@ -61,7 +65,7 @@ public class RPS_Manager : MiniGame
         }
         if (_isPlayerChoice == true)
         {
-            _instantiatedPlayerSign.transform.position = playerCardPosition.position;
+            _instantiatedPlayerSign.transform.position = instantiatedPlayerPos;
             _canRedo = false;
             AiChoice();
             CompareChoices();
@@ -91,7 +95,7 @@ public class RPS_Manager : MiniGame
                 _instantiatedAiSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.ShitSign;
                 break; 
         } 
-        _instantiatedAiSign.transform.position = aiCardPosition.position;
+        _instantiatedAiSign.transform.position = instantiatedAiPos;
     }
     
     private void CompareChoices()
@@ -104,14 +108,24 @@ public class RPS_Manager : MiniGame
             if (_playerInput > _aiInput)
             {
                 Debug.Log("Player Won");
-                //player wins 
+                CallValidate(true);
             }
             else 
             {
                 Debug.Log("Player Lost");
-                //player loses
+                CallValidate(false);
             }
-            
         }
     }
+    
+    public override void CloseGame()
+    {
+        foreach (Transform child in transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        base.CloseGame();
+        _hasStarted = false; 
+    }
+    
 }

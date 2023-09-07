@@ -679,9 +679,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725cb0cedd2847849a79c37215716883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signPrefab: {fileID: 0}
-  playerCardPosition: {fileID: 0}
-  aiCardPosition: {fileID: 0}
+  signPrefab: {fileID: 4064587433420622185, guid: ff5e5ace705f1e34f900948ae86b8213, type: 3}
+  instantiatedPlayerPos: {x: 0, y: -3}
+  instantiatedAiPos: {x: 0, y: 3}
 --- !u!4 &1873046532
 Transform:
   m_ObjectHideFlags: 0
