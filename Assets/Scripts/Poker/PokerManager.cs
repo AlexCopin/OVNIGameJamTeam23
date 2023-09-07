@@ -105,6 +105,9 @@ public class PokerManager : MiniGame
         foreach (Transform child in transform)
         {
             GameObject.Destroy(child.gameObject);
+            _pokerCardsNeutral.Clear();
+            _pokerCardsPlayer.Clear();
+            _pokerCardsIA.Clear();
         }
         base.CloseGame();
     }

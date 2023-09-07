@@ -16,20 +16,20 @@ public class RPS_Manager : MiniGame
     private int _playerInput;
     private int _aiInput;
 
-    private bool _hasStarted = false; 
     private bool _isPlayerChoice = false;
     private bool _canRedo = true;
 
     public override void StartGame()
     {
         base.StartGame();
-        _hasStarted = true; 
+        _canRedo = true; 
+        AiChoice();
     }
 
     private void Update()
     {
         //Pique > Coeur > Trèfles > Carreau > Pique
-        if (_canRedo && _hasStarted)
+        if (_canRedo)
         {
             PlayerChoice();
         }
@@ -42,33 +42,31 @@ public class RPS_Manager : MiniGame
         {
             _isPlayerChoice = true;
             _playerInput = 0;
-            _instantiatedPlayerSign = Instantiate(signPrefab);
+            _instantiatedPlayerSign = Instantiate(signPrefab, instantiatedPlayerPos, Quaternion.Euler(270, 0,90), gameObject.transform);
             _instantiatedPlayerSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.DogeSign;
         } else if (Input.GetKeyDown(KeyCode.Z))
         {
             _isPlayerChoice = true;
             _playerInput = 1;
-            _instantiatedPlayerSign = Instantiate(signPrefab);
+            _instantiatedPlayerSign = Instantiate(signPrefab, instantiatedPlayerPos, Quaternion.Euler(270, 0,90), gameObject.transform);
             _instantiatedPlayerSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.LamastiSign;
         } else if (Input.GetKeyDown(KeyCode.E))
         {
             _isPlayerChoice = true;
             _playerInput = 2;
-            _instantiatedPlayerSign = Instantiate(signPrefab);
+            _instantiatedPlayerSign = Instantiate(signPrefab, instantiatedPlayerPos, Quaternion.Euler(270, 0,90), gameObject.transform);
             _instantiatedPlayerSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.EteRhumSign;
         } else if (Input.GetKeyDown(KeyCode.R))
         {
             _isPlayerChoice = true;
             _playerInput = 3;
-            _instantiatedPlayerSign = Instantiate(signPrefab);
+            _instantiatedPlayerSign = Instantiate(signPrefab, instantiatedPlayerPos, Quaternion.Euler(270, 0,90), gameObject.transform);
             _instantiatedPlayerSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.ShitSign;
         }
         if (_isPlayerChoice == true)
         {
-            _instantiatedPlayerSign.transform.position = instantiatedPlayerPos;
             _canRedo = false;
-            AiChoice();
-            CompareChoices();
+            StartCoroutine(CompareChoices());
         }
     }
 
@@ -76,33 +74,37 @@ public class RPS_Manager : MiniGame
     {
         _aiInput = Random.Range(0, 4);
         
+        _instantiatedAiSign = Instantiate(signPrefab, instantiatedAiPos, Quaternion.Euler(270,180,90),gameObject.transform);
         switch (_aiInput)
         {
             case 0:
-                _instantiatedAiSign = Instantiate(signPrefab);
                 _instantiatedAiSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.DogeSign;
                 break; 
             case 1:
-                _instantiatedAiSign = Instantiate(signPrefab);
                 _instantiatedAiSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.LamastiSign;
                 break; 
             case 2:
-                _instantiatedAiSign = Instantiate(signPrefab);
                 _instantiatedAiSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.EteRhumSign;
                 break;
             case 3:
-                _instantiatedAiSign = Instantiate(signPrefab);
                 _instantiatedAiSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.ShitSign;
                 break; 
         } 
-        _instantiatedAiSign.transform.position = instantiatedAiPos;
     }
     
-    private void CompareChoices()
+    private IEnumerator CompareChoices()
     {
+        _instantiatedAiSign.transform.eulerAngles = new Vector3(270, 0, 90);
+        
+        yield return new WaitForSeconds(2.0f);
         if (_playerInput == _aiInput || Mathf.Abs(_playerInput - _aiInput) == 2)
         {
+            foreach (Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
             _canRedo = true; 
+            AiChoice();
 
         } else if (_playerInput !=  _aiInput) {
             if (_playerInput > _aiInput)
@@ -115,17 +117,10 @@ public class RPS_Manager : MiniGame
                 Debug.Log("Player Lost");
                 CallValidate(false);
             }
+            foreach (Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
-    
-    public override void CloseGame()
-    {
-        foreach (Transform child in transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
-        base.CloseGame();
-        _hasStarted = false; 
-    }
-    
 }
