@@ -1393,6 +1393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267a68c07ff394d43bb4c10b4414290a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerScore: 0
   _prefabPokerCard: {fileID: 6702750439295781869, guid: 6e77e7cab60e52048bf66f7cae56a98c, type: 3}
   _NumberCardsPlayers: 3
   _NumberCardsNeutral: 5
@@ -2313,6 +2314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725cb0cedd2847849a79c37215716883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerScore: 0
   signPrefab: {fileID: 4064587433420622185, guid: ff5e5ace705f1e34f900948ae86b8213, type: 3}
   instantiatedPlayerPos: {x: 4.5, y: -4.25}
   instantiatedAiPos: {x: 4.5, y: -1.25}
@@ -2596,19 +2598,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5877023785401279565, guid: 596a8608848b9864db26c6ffcd12d368, type: 3}
       propertyPath: m_LocalScale.x
-      value: 8.392916
+      value: 6.558276
       objectReference: {fileID: 0}
     - target: {fileID: 5877023785401279565, guid: 596a8608848b9864db26c6ffcd12d368, type: 3}
       propertyPath: m_LocalScale.y
-      value: 9.179508
+      value: 7.1239467
       objectReference: {fileID: 0}
     - target: {fileID: 5877023785401279565, guid: 596a8608848b9864db26c6ffcd12d368, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.2036
+      value: -3.6581
       objectReference: {fileID: 0}
     - target: {fileID: 5877023785401279565, guid: 596a8608848b9864db26c6ffcd12d368, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05
+      value: -0.8249
       objectReference: {fileID: 0}
     - target: {fileID: 5877023785401279565, guid: 596a8608848b9864db26c6ffcd12d368, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3299,7 +3301,7 @@ PrefabInstance:
       objectReference: {fileID: 2315903225491322829}
     - target: {fileID: 7447189072281050708, guid: 7e74dbc8235fabe4483132f33e00547f, type: 3}
       propertyPath: _moneyValue
-      value: 50
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7447189072281050708, guid: 7e74dbc8235fabe4483132f33e00547f, type: 3}
       propertyPath: _speedValue
