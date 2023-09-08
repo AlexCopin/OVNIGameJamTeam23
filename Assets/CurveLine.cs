@@ -10,7 +10,7 @@ public class CurveLine : MonoBehaviour
     public Vector2 _currentPos;
     private Vector2 _startPos;
 
-    int _moneyValue;
+    [SerializeField] int _moneyValue;
     [SerializeField] float _speedValue;
     [SerializeField] int _losingValue;
     [SerializeField] bool _isPlayer;
@@ -57,6 +57,7 @@ public class CurveLine : MonoBehaviour
         if (_isPlayer)
         {
             _moneyValue = (int)GameManager.Instance.StartMoney;
+            Debug.Log((int)GameManager.Instance.StartMoney);
         }
         else
         {
@@ -156,7 +157,6 @@ public class CurveLine : MonoBehaviour
                 _curvePos = transform.position;
             }
 
-            /*_moneyValue = (int)(_currentPos.y * 100);*/
         }
         CheckIfOut();
         _moneyValue = Mathf.Clamp(_moneyValue, 0, 500);
@@ -170,6 +170,7 @@ public class CurveLine : MonoBehaviour
         _isChanging = true;
         float elapsedTime = 0;
         Vector2 startPos = _previousPosition;
+        Debug.Log(_moneyValue + " / " + startPos.y + money * _unitForMoney);
         while (elapsedTime < _lerpDuration)
         {
             _currentPos = Vector2.Lerp(startPos, new Vector2(startPos.x, startPos.y + money * _unitForMoney), elapsedTime / _lerpDuration);
@@ -202,20 +203,18 @@ public class CurveLine : MonoBehaviour
         
         float ymin = _curveZone.transform.position.y - (_curveZone.GetComponent<SpriteRenderer>().bounds.size.y / 2);
         float ymax = _curveZone.transform.position.y + (_curveZone.GetComponent<SpriteRenderer>().bounds.size.y / 2);
-        Debug.Log(xmax + ", " + _currentPos.x);
         if (_currentPos.y <= ymin)
         {
             _currentPos.y = ymin;
         }
         else if (_currentPos.x >= xmax)
         {
-            Debug.Log("Sorti");
             _isAtRight = true;
         }
         
         else if (_currentPos.y >= ymax)
         {
-            Debug.Log("Trop en haut");
+
         }
     }
 
