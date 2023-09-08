@@ -38,25 +38,25 @@ public class RPS_Manager : MiniGame
     private void PlayerChoice()
     {
         _isPlayerChoice = false;
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetButtonDown("Heart"))
         {
             _isPlayerChoice = true;
             _playerInput = 0;
             _instantiatedPlayerSign = Instantiate(signPrefab, instantiatedPlayerPos, Quaternion.Euler(270, 0,90), gameObject.transform);
             _instantiatedPlayerSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.DogeSign;
-        } else if (Input.GetKeyDown(KeyCode.Z))
+        } else if (Input.GetButtonDown("Spade"))
         {
             _isPlayerChoice = true;
             _playerInput = 1;
             _instantiatedPlayerSign = Instantiate(signPrefab, instantiatedPlayerPos, Quaternion.Euler(270, 0,90), gameObject.transform);
             _instantiatedPlayerSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.LamastiSign;
-        } else if (Input.GetKeyDown(KeyCode.E))
+        } else if (Input.GetButtonDown("Diamond"))
         {
             _isPlayerChoice = true;
             _playerInput = 2;
             _instantiatedPlayerSign = Instantiate(signPrefab, instantiatedPlayerPos, Quaternion.Euler(270, 0,90), gameObject.transform);
             _instantiatedPlayerSign.GetComponent<RPS_Sign>().typeSign = RPS_Sign.SignType.EteRhumSign;
-        } else if (Input.GetKeyDown(KeyCode.R))
+        } else if (Input.GetButtonDown("Clover"))
         {
             _isPlayerChoice = true;
             _playerInput = 3;

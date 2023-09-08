@@ -70,20 +70,13 @@ public class CurveLine : MonoBehaviour
     private void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!_isChanging && _isPlayer)
-            {
-                MovementCurve(-20);
-            }
-
-        }
         if (_moneyValue <= 0)
         {
             isDead = true;
+            GameManager.Instance.Death();
         }
         
-        if (_isPlayer && !isDead)
+        else if (_isPlayer && !isDead)
         {
             if (!_isChanging)
             {

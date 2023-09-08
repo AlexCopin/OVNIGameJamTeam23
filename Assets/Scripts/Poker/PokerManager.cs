@@ -95,7 +95,7 @@ public class PokerManager : MiniGame
             }
         }
 
-        CallValidate(scoreIA < scorePlayer);
+        CallValidate(scoreIA > scorePlayer);
         
         yield return null;
     }

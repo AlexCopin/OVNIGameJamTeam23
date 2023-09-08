@@ -1,6 +1,8 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
@@ -12,6 +14,8 @@ public class GameManager : MonoBehaviour
     private RPS_Manager _Rps;
     [SerializeField]
     private CurveLine _Curve;
+    [SerializeField]
+    private GameObject _scoreMenu;
 
     Animator Anim;
     [SerializeField] GameObject RouletteObj;
@@ -60,6 +64,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        _scoreMenu.SetActive(false);
         _currentMoney = StartMoney;
         _pokerManager.StartGame();
         _currentGame = _pokerManager;
@@ -169,5 +174,40 @@ public class GameManager : MonoBehaviour
     public void ScoreUpdate()
     {
         playerScore += _currentBid;
+    }
+
+    public void Death()
+    {
+        _scoreMenu.SetActive(true);
+        _scoreMenu.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Ton score: " + playerScore;
+        switch (playerScore)
+        {
+            
+            case < 100:
+                _scoreMenu.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Bravo! Tu as obtenu le titre de: Nul!";
+                break;
+            case >= 100 and < 200:
+                _scoreMenu.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Bravo! Tu as obtenu le titre de: Caude4 l'Ane!";
+                break;
+            case >= 200 and < 300:
+                _scoreMenu.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Bravo! Tu as obtenu le titre de: SeuquouiZy_Officiel!";
+                break;
+            case >= 300 and < 400:
+                _scoreMenu.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Bravo! Tu as obtenu le titre de: Atsem Turlupin";
+                break;
+            case >= 400 and < 500:
+                _scoreMenu.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Bravo! Tu as obtenu le titre de: Bernard m'adore";
+                break;
+            case > 500:
+                _scoreMenu.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Bravo! Tu as obtenu le titre de: Le canide de Mur Rue";
+                break;
+
+        }
+
+        if (Input.anyKeyDown)
+        {
+            SceneManager.LoadScene("MenuPrincipale");
+        }
+
     }
 }
