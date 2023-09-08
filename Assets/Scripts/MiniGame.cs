@@ -8,6 +8,8 @@ public class MiniGame : MonoBehaviour
 {
     public event Action<bool> OnValidate;
 
+    public int playerScore = 0; 
+
     virtual protected void Start()
     {
     }
@@ -31,4 +33,10 @@ public class MiniGame : MonoBehaviour
         //Global code put here
         gameObject.SetActive(false);
     }
+
+    public void ScoreUpdate()
+    {
+        playerScore += 10;
+    }
+    
 }

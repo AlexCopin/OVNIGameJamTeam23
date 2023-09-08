@@ -96,6 +96,10 @@ public class PokerManager : MiniGame
         }
 
         CallValidate(scoreIA < scorePlayer);
+        if (scoreIA < scorePlayer)
+        {
+            ScoreUpdate();
+        }
         yield return null;
     }
 
