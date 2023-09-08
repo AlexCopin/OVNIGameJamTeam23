@@ -368,7 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pokerManager: {fileID: 896476430}
   _Rps: {fileID: 1873046531}
-  _Curve: {fileID: 0}
+  _Curve: {fileID: 8911350099016399576}
   RouletteObj: {fileID: 1014548914}
   StartMoney: 200
   _Bid1Value: 10
@@ -2659,7 +2659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5877023785401279565, guid: 596a8608848b9864db26c6ffcd12d368, type: 3}
       propertyPath: m_LocalScale.y
-      value: 7.1239467
+      value: 7.037747
       objectReference: {fileID: 0}
     - target: {fileID: 5877023785401279565, guid: 596a8608848b9864db26c6ffcd12d368, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2667,7 +2667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5877023785401279565, guid: 596a8608848b9864db26c6ffcd12d368, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.8249
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5877023785401279565, guid: 596a8608848b9864db26c6ffcd12d368, type: 3}
       propertyPath: m_LocalPosition.z
