@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private RPS_Manager _Rps;
     [SerializeField]
-    private Curve _Curve;
+    private CurveLine _Curve;
 
     Animator Anim;
     [SerializeField] GameObject RouletteObj;
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
         if (PlayerWon)
         {
             Debug.Log("Player won");
-            //_Curve.MovementCurve(_currentBid);
+            _Curve.MovementCurve((int)_currentBid);
             WinningMachine.Play();
             FallingCoin.Play();
             StartCoroutine(playRoulette());
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Player lost");
-            //_Curve.MovementCurve(-_currentBid);
+            _Curve.MovementCurve((int)-_currentBid);
             LosingGame.Play();
         }
         ChangeGame();
