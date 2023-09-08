@@ -45,15 +45,6 @@ public class CurveLine : MonoBehaviour
         _lerpDuration = 1f;
         _randomValueBot = Random.Range(_maxMoneyToLose, _maxMoneyToAdd);
         _timeElapsed = 0f;
-        
-        _unitForMoney = _curveZone.GetComponent<SpriteRenderer>().bounds.size.y / 600;
-        transform.position = new Vector2(_curveZone.transform.position.x - (_curveZone.GetComponent<SpriteRenderer>().bounds.size.x / 2) + (50 * _unitForMoney), _curveZone.transform.position.y - (_curveZone.GetComponent<SpriteRenderer>().bounds.size.y / 2) + (50 * _unitForMoney) + (_moneyValue * _unitForMoney));
-        GetComponent<LineRenderer>().enabled = true;
-        _line = GetComponent<LineRenderer>();
-        _previousPosition = transform.position;
-        transform.position = new Vector3(0, 0, 0);
-        _originPos = _previousPosition;
-        _originMoneyValue = _moneyValue;
         if (_isPlayer)
         {
             _moneyValue = (int)GameManager.Instance.StartMoney;
@@ -63,6 +54,16 @@ public class CurveLine : MonoBehaviour
         {
             _moneyValue = Random.Range(50, 300);
         }
+        _unitForMoney = _curveZone.GetComponent<SpriteRenderer>().bounds.size.y / 600;
+        transform.position = new Vector2(_curveZone.transform.position.x - (_curveZone.GetComponent<SpriteRenderer>().bounds.size.x / 2) + (50 * _unitForMoney), _curveZone.transform.position.y - (_curveZone.GetComponent<SpriteRenderer>().bounds.size.y / 2) + (50 * _unitForMoney) + (_moneyValue * _unitForMoney));
+        GetComponent<LineRenderer>().enabled = true;
+        _line = GetComponent<LineRenderer>();
+        
+        _previousPosition = transform.position;
+        transform.position = new Vector3(0, 0, 0);
+        _originPos = _previousPosition;
+        _originMoneyValue = _moneyValue;
+        
         _curvePos = transform.position;
     }
 
@@ -170,7 +171,6 @@ public class CurveLine : MonoBehaviour
         _isChanging = true;
         float elapsedTime = 0;
         Vector2 startPos = _previousPosition;
-        Debug.Log(_moneyValue + " / " + startPos.y + money * _unitForMoney);
         while (elapsedTime < _lerpDuration)
         {
             _currentPos = Vector2.Lerp(startPos, new Vector2(startPos.x, startPos.y + money * _unitForMoney), elapsedTime / _lerpDuration);

@@ -1,7 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-
 public class GameManager : MonoBehaviour
 {
 
@@ -45,6 +44,8 @@ public class GameManager : MonoBehaviour
     private AudioSource StartGame;
     [SerializeField]
     private TMP_Text _textCurrentBid;
+    [SerializeField]
+    private float playerScore = 0;
 
     private void Awake()
     {
@@ -114,6 +115,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Player won");
             _Curve.MovementCurve((int)_currentBid);
+            ScoreUpdate();
             WinningMachine.Play();
             FallingCoin.Play();
             StartCoroutine(playRoulette());
@@ -162,5 +164,10 @@ public class GameManager : MonoBehaviour
             _currentGame = _pokerManager;
         }
         _currentGame.StartGame();
+    }
+
+    public void ScoreUpdate()
+    {
+        playerScore += _currentBid;
     }
 }

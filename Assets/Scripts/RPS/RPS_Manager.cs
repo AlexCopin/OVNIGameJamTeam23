@@ -111,7 +111,6 @@ public class RPS_Manager : MiniGame
             {
                 Debug.Log("Player Won");
                 CallValidate(true);
-                ScoreUpdate();
             }
             else 
             {
