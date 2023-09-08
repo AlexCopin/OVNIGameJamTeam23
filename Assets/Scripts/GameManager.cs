@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
         _currentBid = _Bid1Value;
         _textCurrentBid.text = "" + _currentBid;
         Anim = RouletteObj.GetComponent<Animator>();
+        StartGame.Play();
     }
 
     void Update()
