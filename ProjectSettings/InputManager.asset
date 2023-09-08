@@ -185,10 +185,10 @@ InputManager:
     m_Name: Validate
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: s
-    altNegativeButton: 
-    altPositiveButton: 
+    negativeButton: x
+    positiveButton: g
+    altNegativeButton: v
+    altPositiveButton: c
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
