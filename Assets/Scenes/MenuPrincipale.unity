@@ -236,7 +236,6 @@ GameObject:
   - component: {fileID: 776051701}
   - component: {fileID: 776051703}
   - component: {fileID: 776051702}
-  - component: {fileID: 776051704}
   - component: {fileID: 776051705}
   m_Layer: 5
   m_Name: fond
@@ -302,18 +301,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 776051700}
   m_CullTransparentMesh: 1
---- !u!114 &776051704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 776051700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b26b373e260cf741bfee8ba39ac654f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &776051705
 MonoBehaviour:
   m_ObjectHideFlags: 0

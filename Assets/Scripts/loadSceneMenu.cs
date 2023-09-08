@@ -8,11 +8,9 @@ public class loadSceneMenu : MonoBehaviour
 
     public void Update()
     {
-
         if (Input.GetButtonDown("Lever"))
         {
             SceneManager.LoadScene("PokerScene");
-            Debug.Log("ui");
         }
     }
 }
